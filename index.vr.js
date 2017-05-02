@@ -21,10 +21,11 @@ export default class pong extends React.Component {
     render() {
     return (
       <View>
-        <Pano source={asset('mountain.jpg')}/>
+        <Pano source={asset('background.jpg')}
+        />
         <Text
           style={{
-            backgroundColor: '#777879',
+            backgroundColor: '#242424af',
             fontSize: 0.8,
             fontWeight: '400',
             layoutOrigin: [0.5, 0.5],
@@ -39,18 +40,14 @@ export default class pong extends React.Component {
 
         <VrButton
             style={{
-                width: 10.4,
                 height:0.4,
                 paddingTop: 0.2,
-                paddingLeft: 0.2,
-                paddingRight: 0.2,
-                borderRadius: 50,
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderStyle: 'solid',
                 borderColor: 'red',
                 borderWidth: 0.01,
-                layoutOrigin: [0.4, 0]
+                layoutOrigin: [0.3, 0]
             }}
             onEnter={()=>this.setState((prevState) => ({color: 'green', station: prevState.station + 1}))}
             onClick={()=>this.setState((prevState) => ({color: 'blue', station: prevState.station + 1}))}>
