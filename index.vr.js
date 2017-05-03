@@ -10,12 +10,29 @@ import {
 } from 'react-vr';
 
 export default class pong extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             color: 'red',
-            station : 1
+            station : 1,
+            stationInfo: [],
         }
+
+        this.fetchData = this.fetchData.bind(this);
+    }
+
+    fetchData() {
+        fetch('http://data.foli.fi//siri/sm/59')
+        .then((res) => {
+            return res.json();
+        })
+        .then((res) => {
+            console.log(res);
+            this.setState((prevState) => ({ stationInfo: res.result[0] }));
+        }).catch((error)=>{
+                console.log("Api call error");
+                console.log(error.message);
+        })
     }
 
     render() {
@@ -35,7 +52,7 @@ export default class pong extends React.Component {
             textAlignVertical: 'center',
             transform: [{translate: [0, 0, -3]}],
           }}>
-          {this.state.station} Lentoasema{"\n"}11:58
+          {this.state.stationInfo.aimedarrivaltime != undefined ? this.state.stationInfo.aimedarrivaltime.toString() : "empty"} Lentoasema{"\n"}11:58
         </Text>
 
         <VrButton
@@ -49,8 +66,7 @@ export default class pong extends React.Component {
                 borderWidth: 0.01,
                 layoutOrigin: [0.3, 0]
             }}
-            onEnter={()=>this.setState((prevState) => ({color: 'green', station: prevState.station + 1}))}
-            onClick={()=>this.setState((prevState) => ({color: 'blue', station: prevState.station + 1}))}>
+            onClick={()=>this.fetchData()}>
             <Text
                     style= {{
                             backgroundColor: this.state.color,

@@ -8,6 +8,8 @@ import {VRInstance} from 'react-vr-web';
 function init(bundle, parent, options) {
   const vr = new VRInstance(bundle, 'pong', parent, {
     // Add custom options here
+    cursorEnabled: true,
+    cursorVisibility: 'visible',
     ...options,
   });
   vr.render = function() {
