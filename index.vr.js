@@ -13,7 +13,6 @@ export default class pong extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            color: 'red',
             station : 1,
             stationInfo: [],
         }
@@ -32,8 +31,8 @@ export default class pong extends React.Component {
         return time;
     }
 
-    fetchData() {
-        fetch('http://data.foli.fi/siri/sm/1')
+    fetchData(stopNumber) {
+        fetch('http://data.foli.fi/siri/sm/'+stopNumber)
         .then((res) => {
             return res.json();
         })
@@ -48,51 +47,68 @@ export default class pong extends React.Component {
 
     render() {
     return (
-      <View>
-        <Pano source={asset('background.jpg')}
-        />
-        <Text
-          style={{
-            backgroundColor: '#242424af',
-            fontSize: 0.8,
-            fontWeight: '400',
-            layoutOrigin: [0.5, 0.5],
-            paddingLeft: 0.2,
-            paddingRight: 0.2,
-            textAlign: 'center',
-            textAlignVertical: 'center',
-            transform: [{translate: [0, 0, -3]}],
-          }}>
-          {this.state.stationInfo.expecteddeparturetime != undefined ? this.convertUnixTimeToDate(this.state.stationInfo.expecteddeparturetime) : "empty"} Lentoasema{"\n"}11:58
-        </Text>
-
-        <VrButton
-            style={{
-                height:0.4,
-                paddingTop: 0.2,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderStyle: 'solid',
-                borderColor: 'red',
-                borderWidth: 0.01,
-                layoutOrigin: [0.3, 0]
-            }}
-            onClick={()=>this.fetchData()}>
-            <Text
-                    style= {{
-                            backgroundColor: this.state.color,
-                            fontSize: 0.8,
-                            fontWeight: '400',
-                            layoutOrigin: [0.5, 0.5],
-                            paddingLeft: 0.2,
-                            paddingRight: 0.2,
-                            textAlign: 'center',
-                            textAlignVertical: 'center',
-                            transform: [{translate: [0, 0, -3]}],
+        <View>
+                <Pano source={asset('background.jpg')}/>
+                <View
+                        style={{
+                                width: 8,
+                                layoutOrigin: [0.5, 1],
                         }}>
-                    Nappi
-            </Text>
-        </VrButton>
+                        <VrButton
+                                style={{
+                                    
+                                }}
+                                onClick={()=>this.fetchData(1)}>
+                                <Text
+                                        style= {{
+                                                backgroundColor: '#af1024af',
+                                                fontSize: 0.8,
+                                                fontWeight: '400',
+                                                paddingLeft: 0.2,
+                                                paddingRight: 0.2,
+                                                textAlign: 'center',
+                                                textAlignVertical: 'center',
+                                                transform: [{translate: [0, 0, -5]}],
+                                        }}>
+                                        Pysäkki 1
+                                </Text>
+                        </VrButton>
+                        <VrButton
+                                style={{
+                                }}
+                                onClick={()=>this.fetchData(69)}>
+                                <Text
+                                        style= {{
+                                                backgroundColor: '#af1024af',
+                                                fontSize: 0.8,
+                                                fontWeight: '400',
+                                                paddingLeft: 0.2,
+                                                paddingRight: 0.2,
+                                                textAlign: 'center',
+                                                textAlignVertical: 'center',
+                                                transform: [{translate: [0, 0, -5]}],
+                                        }}>
+                                        Pysäkki 69
+                                </Text>
+                        </VrButton>
+                </View>
+
+                <Text
+                      style={{
+                                backgroundColor: '#242424af',
+                                fontSize: 0.8,
+                                fontWeight: '400',
+                                paddingLeft: 0.2,
+                                paddingRight: 0.2,
+                                textAlign: 'center',
+                                textAlignVertical: 'center',
+                                layoutOrigin: [0.5, 1],
+                                transform: [{translate: [0, 0, -5]}],
+                        }}>
+                        {this.state.stationInfo.expecteddeparturetime != undefined ? 
+                        this.convertUnixTimeToDate(this.state.stationInfo.expecteddeparturetime) : ""}{" "}
+                        {this.state.stationInfo.destinationdisplay}
+                </Text>
       </View>
     );
   }
