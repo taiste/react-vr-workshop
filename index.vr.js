@@ -25,12 +25,10 @@ export default class pong extends React.Component {
     }
 
     convertUnixTimeToDate(unixTime) {
-        console.log(unixTime);
         var a = new Date(unixTime * 1000);
         var hour = (a.getHours() < 10 ? '0' : '') + a.getHours();
         var min = (a.getMinutes() < 10 ? '0' : '') + a.getMinutes();
         var time = hour + ':' + min;
-        console.log(time);
         return time;
     }
 
@@ -40,7 +38,6 @@ export default class pong extends React.Component {
             return res.json();
         })
         .then((res) => {
-            console.log(res);
             this.setState((prevState) => ({ stationInfo: (res.result) }));
         }).catch((error)=>{
                 console.log("Api call error");
@@ -50,7 +47,6 @@ export default class pong extends React.Component {
 
     assembleResultText(i) {
         var time = this.state.stationInfo.length > 0 ? this.convertUnixTimeToDate(this.state.stationInfo[i].expecteddeparturetime) : "";
-        console.log(time);
         var destination = this.state.stationInfo.length > 0 ? this.state.stationInfo[i].destinationdisplay : "";
         var line = this.state.stationInfo.length > 0 ? this.state.stationInfo[i].lineref : "";
         return time+" "+destination+" "+line;
