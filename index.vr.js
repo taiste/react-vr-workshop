@@ -18,17 +18,28 @@ export default class pong extends React.Component {
             stationInfo: [],
         }
 
+        this.convertUnixTimeToDate = this.convertUnixTimeToDate.bind(this);
         this.fetchData = this.fetchData.bind(this);
     }
 
+    convertUnixTimeToDate(unixTime) {
+        console.log(unixTime);
+        var a = new Date(unixTime * 1000);
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var time = hour + ':' + min;
+        console.log(time);
+        return time;
+    }
+
     fetchData() {
-        fetch('http://data.foli.fi//siri/sm/59')
+        fetch('http://data.foli.fi/siri/sm/1')
         .then((res) => {
             return res.json();
         })
         .then((res) => {
             console.log(res);
-            this.setState((prevState) => ({ stationInfo: res.result[0] }));
+            this.setState((prevState) => ({ stationInfo: (res.result[0]) }));
         }).catch((error)=>{
                 console.log("Api call error");
                 console.log(error.message);
@@ -52,7 +63,7 @@ export default class pong extends React.Component {
             textAlignVertical: 'center',
             transform: [{translate: [0, 0, -3]}],
           }}>
-          {this.state.stationInfo.aimedarrivaltime != undefined ? this.state.stationInfo.aimedarrivaltime.toString() : "empty"} Lentoasema{"\n"}11:58
+          {this.state.stationInfo.expecteddeparturetime != undefined ? this.convertUnixTimeToDate(this.state.stationInfo.expecteddeparturetime) : "empty"} Lentoasema{"\n"}11:58
         </Text>
 
         <VrButton
