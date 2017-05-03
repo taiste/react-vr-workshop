@@ -13,13 +13,15 @@ export default class pong extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            foliApi: 'https://data.foli.fi/siri/sm/',
             stationInfo: [],
-            numberOfResults: 5
+            numberOfResults: 5,
         }
 
         this.convertUnixTimeToDate = this.convertUnixTimeToDate.bind(this);
         this.fetchData = this.fetchData.bind(this);
         this.createResults = this.createResults.bind(this);
+        this.assembleResultText = this.assembleResultText.bind(this);
     }
 
     convertUnixTimeToDate(unixTime) {
@@ -33,7 +35,7 @@ export default class pong extends React.Component {
     }
 
     fetchData(stopNumber) {
-        fetch('https://data.foli.fi/siri/sm/'+stopNumber)
+        fetch(this.state.foliApi+stopNumber)
         .then((res) => {
             return res.json();
         })
@@ -46,8 +48,12 @@ export default class pong extends React.Component {
         })
     }
 
-    buildResultText() {
-
+    assembleResultText(i) {
+        var time = this.state.stationInfo.length > 0 ? this.convertUnixTimeToDate(this.state.stationInfo[i].expecteddeparturetime) : "";
+        console.log(time);
+        var destination = this.state.stationInfo.length > 0 ? this.state.stationInfo[i].destinationdisplay : "";
+        var line = this.state.stationInfo.length > 0 ? this.state.stationInfo[i].lineref : "";
+        return time+" "+destination+" "+line;
     }
 
     createResults() {
@@ -65,10 +71,7 @@ export default class pong extends React.Component {
                     marginTop: 0.02,
                     width: 1,
                 }}>
-                {this.state.stationInfo.length > 0 ?
-                this.convertUnixTimeToDate(this.state.stationInfo[i].expecteddeparturetime) : ""}{" "}
-                {this.state.stationInfo.length > 0 ? this.state.stationInfo[i].destinationdisplay : ""}{" "}
-                {this.state.stationInfo.length > 0 ? this.state.stationInfo[i].lineref : ""}
+                {this.assembleResultText(i)}
                 </Text>);
 
         }
