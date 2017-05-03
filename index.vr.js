@@ -13,8 +13,8 @@ export default class pong extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            station : 1,
             stationInfo: [],
+            numberOfResults: 5
         }
 
         this.convertUnixTimeToDate = this.convertUnixTimeToDate.bind(this);
@@ -46,24 +46,30 @@ export default class pong extends React.Component {
         })
     }
 
+    buildResultText() {
+
+    }
+
     createResults() {
         const resultViews = [];
         for(var i = 0; i < this.state.stationInfo.length; i++)
         {
-                if(i > 4)
-                {
-                        break;
-                }
-                resultViews.push(<Text
-                              style={{
-                                        transform: [{translate: [1.2, 0.1, 0]}, {rotateY: -30}],
-                                        backgroundColor: '#242424af',
-                                        marginTop: 0.01,
-                              }}>
-                              {this.state.stationInfo.length > 0 ?
-                              this.convertUnixTimeToDate(this.state.stationInfo[i].expecteddeparturetime) : ""}{" "}
-                              {this.state.stationInfo.length > 0 ? this.state.stationInfo[i].destinationdisplay : ""}
-                        </Text>);
+            if(i > this.state.numberOfResults-1)
+            {
+                    break;
+            }
+            resultViews.push(<Text
+                style={{
+                    transform: [{translate: [1.3, 0.3, 0]}, {rotateY: -30}],
+                    backgroundColor: '#242424af',
+                    marginTop: 0.02,
+                    width: 1,
+                }}>
+                {this.state.stationInfo.length > 0 ?
+                this.convertUnixTimeToDate(this.state.stationInfo[i].expecteddeparturetime) : ""}{" "}
+                {this.state.stationInfo.length > 0 ? this.state.stationInfo[i].destinationdisplay : ""}{" "}
+                {this.state.stationInfo.length > 0 ? this.state.stationInfo[i].lineref : ""}
+                </Text>);
 
         }
         return resultViews
@@ -79,9 +85,7 @@ export default class pong extends React.Component {
                     layoutOrigin: [0.5, 0.5],
                 }}>
                     <VrButton
-                        style={{
-                            marginTop: 0.1
-                        }}
+
                         onClick={()=>this.fetchData(1)}>
                         <Text
                             style= {{
@@ -102,6 +106,19 @@ export default class pong extends React.Component {
                                 backgroundColor: "#701024af",
                             }}>
                             Pysäkki 69
+                        </Text>
+                    </VrButton>
+                    <VrButton
+                        style={{
+                            marginTop: 0.1
+                        }}
+                        onClick={()=>this.fetchData(162)}>
+                        <Text
+                            style= {{
+                                textAlign: 'center',
+                                backgroundColor: "#9040efaf",
+                            }}>
+                            Pysäkki 162
                         </Text>
                     </VrButton>
                     {this.createResults()}
