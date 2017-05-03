@@ -32,7 +32,7 @@ export default class pong extends React.Component {
     }
 
     fetchData(stopNumber) {
-        fetch('http://data.foli.fi/siri/sm/'+stopNumber)
+        fetch('https://data.foli.fi/siri/sm/'+stopNumber)
         .then((res) => {
             return res.json();
         })
@@ -56,7 +56,8 @@ export default class pong extends React.Component {
                         }}>
                         <VrButton
                                 style={{
-                                    
+                                    transform: [{translate: [0, 0, -5]}],
+                                    backgroundColor: 'blue',
                                 }}
                                 onClick={()=>this.fetchData(1)}>
                                 <Text
@@ -68,13 +69,14 @@ export default class pong extends React.Component {
                                                 paddingRight: 0.2,
                                                 textAlign: 'center',
                                                 textAlignVertical: 'center',
-                                                transform: [{translate: [0, 0, -5]}],
                                         }}>
                                         Pysäkki 1
                                 </Text>
                         </VrButton>
                         <VrButton
                                 style={{
+                                        backgroundColor: 'red',
+                                        transform: [{translate: [0, 0, -5]}],
                                 }}
                                 onClick={()=>this.fetchData(69)}>
                                 <Text
@@ -86,7 +88,6 @@ export default class pong extends React.Component {
                                                 paddingRight: 0.2,
                                                 textAlign: 'center',
                                                 textAlignVertical: 'center',
-                                                transform: [{translate: [0, 0, -5]}],
                                         }}>
                                         Pysäkki 69
                                 </Text>
