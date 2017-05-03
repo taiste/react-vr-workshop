@@ -19,6 +19,7 @@ export default class pong extends React.Component {
 
         this.convertUnixTimeToDate = this.convertUnixTimeToDate.bind(this);
         this.fetchData = this.fetchData.bind(this);
+        this.createResults = this.createResults.bind(this);
     }
 
     convertUnixTimeToDate(unixTime) {
@@ -43,6 +44,29 @@ export default class pong extends React.Component {
                 console.log("Api call error");
                 console.log(error.message);
         })
+    }
+
+    createResults() {
+        const resultViews = [];
+        for(var i = 0; i < this.state.stationInfo.length; i++)
+        {
+                resultViews.push(<Text
+                              style={{
+                                        transform: [{translate: [1.2, 0, 0]}, {rotateY: -30}],
+                                        backgroundColor: '#242424af',
+                                        textAlign: 'center',
+                                        marginTop: 0.01,
+                              }}>
+                              {this.state.stationInfo.length > 0 ?
+                              this.convertUnixTimeToDate(this.state.stationInfo[i].expecteddeparturetime) : ""}{" "}
+                              {this.state.stationInfo.length > 0 ? this.state.stationInfo[i].destinationdisplay : ""}
+                        </Text>);
+                if(i > 4)
+                {
+                        break;
+                }
+        }
+        return resultViews
     }
 
     render() {
@@ -85,16 +109,7 @@ export default class pong extends React.Component {
                                 </VrButton>
                         </View>
 
-                        <Text
-                              style={{
-                                        backgroundColor: '#242424af',
-                                        textAlign: 'center',
-                                        marginTop: 0.2,
-                                }}>
-                                {this.state.stationInfo.length > 0 ? 
-                                this.convertUnixTimeToDate(this.state.stationInfo[0].expecteddeparturetime) : ""}{" "}
-                                {this.state.stationInfo.length > 0 ? this.state.stationInfo[0].destinationdisplay : ""}
-                        </Text>
+                        {this.createResults()}
                 </View>
       </View>
     );
