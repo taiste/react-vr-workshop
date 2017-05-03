@@ -74,17 +74,6 @@ export default class pong extends React.Component {
         return resultViews
     }
 
-        createButtons() {
-                const buttonViews = [];
-                for(var i = 0; i < 2; i++)
-                {
-                        buttonViews.push(
-
-                        );
-                }
-                return buttonViews;
-        }
-
         render() {
                 return (
                         <View>
