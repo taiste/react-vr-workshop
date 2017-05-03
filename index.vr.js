@@ -38,7 +38,7 @@ export default class pong extends React.Component {
         })
         .then((res) => {
             console.log(res);
-            this.setState((prevState) => ({ stationInfo: (res.result[0]) }));
+            this.setState((prevState) => ({ stationInfo: (res.result) }));
         }).catch((error)=>{
                 console.log("Api call error");
                 console.log(error.message);
@@ -49,67 +49,53 @@ export default class pong extends React.Component {
     return (
         <View>
                 <Pano source={asset('background.jpg')}/>
-                <View
-                        style={{
-                                width: 8,
-                                layoutOrigin: [0.5, 1],
-                        }}>
-                        <VrButton
+                <View style={{
+                        transform: [{translate: [0, 0, -1]}],
+                        width: 1,
+                        layoutOrigin: [0.5, 0.5],
+                }}>
+                        <View
                                 style={{
-                                    transform: [{translate: [0, 0, -5]}],
-                                    backgroundColor: 'blue',
-                                }}
-                                onClick={()=>this.fetchData(1)}>
-                                <Text
-                                        style= {{
-                                                backgroundColor: '#af1024af',
-                                                fontSize: 0.8,
-                                                fontWeight: '400',
-                                                paddingLeft: 0.2,
-                                                paddingRight: 0.2,
-                                                textAlign: 'center',
-                                                textAlignVertical: 'center',
-                                        }}>
-                                        Pysäkki 1
-                                </Text>
-                        </VrButton>
-                        <VrButton
-                                style={{
-                                        backgroundColor: 'red',
-                                        transform: [{translate: [0, 0, -5]}],
-                                }}
-                                onClick={()=>this.fetchData(69)}>
-                                <Text
-                                        style= {{
-                                                backgroundColor: '#af1024af',
-                                                fontSize: 0.8,
-                                                fontWeight: '400',
-                                                paddingLeft: 0.2,
-                                                paddingRight: 0.2,
-                                                textAlign: 'center',
-                                                textAlignVertical: 'center',
-                                        }}>
-                                        Pysäkki 69
-                                </Text>
-                        </VrButton>
-                </View>
+                                }}>
+                                <VrButton
+                                        style={{
+                                                marginTop: 0.1
+                                        }}
+                                        onClick={()=>this.fetchData(1)}>
+                                        <Text
+                                                style= {{
+                                                        backgroundColor: '#af1024af',
+                                                        textAlign: 'center',
+                                                }}>
+                                                Pysäkki 1
+                                        </Text>
+                                </VrButton>
+                                <VrButton
+                                        style={{
+                                                marginTop: 0.1
+                                        }}
+                                        onClick={()=>this.fetchData(69)}>
+                                        <Text
+                                                style= {{
+                                                       textAlign: 'center',
+                                                       backgroundColor: '#701024af',
+                                                }}>
+                                                Pysäkki 69
+                                        </Text>
+                                </VrButton>
+                        </View>
 
-                <Text
-                      style={{
-                                backgroundColor: '#242424af',
-                                fontSize: 0.8,
-                                fontWeight: '400',
-                                paddingLeft: 0.2,
-                                paddingRight: 0.2,
-                                textAlign: 'center',
-                                textAlignVertical: 'center',
-                                layoutOrigin: [0.5, 1],
-                                transform: [{translate: [0, 0, -5]}],
-                        }}>
-                        {this.state.stationInfo.expecteddeparturetime != undefined ? 
-                        this.convertUnixTimeToDate(this.state.stationInfo.expecteddeparturetime) : ""}{" "}
-                        {this.state.stationInfo.destinationdisplay}
-                </Text>
+                        <Text
+                              style={{
+                                        backgroundColor: '#242424af',
+                                        textAlign: 'center',
+                                        marginTop: 0.2,
+                                }}>
+                                {this.state.stationInfo.length > 0 ? 
+                                this.convertUnixTimeToDate(this.state.stationInfo[0].expecteddeparturetime) : ""}{" "}
+                                {this.state.stationInfo.length > 0 ? this.state.stationInfo[0].destinationdisplay : ""}
+                        </Text>
+                </View>
       </View>
     );
   }
