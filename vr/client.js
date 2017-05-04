@@ -6,7 +6,7 @@
 import {VRInstance} from 'react-vr-web';
 
 function init(bundle, parent, options) {
-  const vr = new VRInstance(bundle, 'pong', parent, {
+  const vr = new VRInstance(bundle, 'reactVrWorkshop', parent, {
     // Add custom options here
     cursorEnabled: true,
     cursorVisibility: 'visible',

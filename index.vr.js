@@ -9,7 +9,7 @@ import {
   VrButton,
 } from 'react-vr';
 
-export default class pong extends React.Component {
+export default class reactVrWorkshop extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -127,4 +127,4 @@ export default class pong extends React.Component {
         }
 };
 
-AppRegistry.registerComponent('pong', () => pong);
+AppRegistry.registerComponent('reactVrWorkshop', () => reactVrWorkshop);
