@@ -1,5 +1,8 @@
 # react-vr-workshop
 
+WIFI: Taiste public DigitjaRiski
+pw: digitjariski
+
 ## Installation
 
 Mitä tarvitaan?
