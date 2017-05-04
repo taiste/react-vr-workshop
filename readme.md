@@ -15,6 +15,13 @@ Asennetaan reactVR:
 Luodaan uusi projekti:
 `react-vr init PROJECT_NAME`
 
+
+Sirrytään luotuun projektiin ja käynnistetään:
+
+`cd PROJECT_NAME`
+
+`npm start`
+
 Selaimella:
 `http://localhost:8081/vr`
 
@@ -37,6 +44,12 @@ Paina nappia ja voilá: Pysäkin aikataulut.
 ## Certit
 
 VR-näkymän aktivointi esimerkiksi Google Cardboardin kanssa vaatii keskusteluyhteyden ssl/tls:n yli. Siis aika tehdä https-certit!
+
+Lataa Android-puhelimellesi Chrome Canary Play Storesta.
+
+Chromessa:
+
+`chrome://flags/#enable-webvr`
 
 `npm install -g http-proxy`
 
