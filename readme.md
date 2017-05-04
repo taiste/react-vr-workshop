@@ -80,6 +80,11 @@ https://hackernoon.com/how-i-got-a-react-vr-dev-environment-working-with-an-andr
 
 https://help.github.com/articles/creating-a-pull-request/
 
+## Things to find out
+
+1. Bindaus javascriptissa
+2. Toastin teko
+
 ## Credits
 
 Taiste Oy
