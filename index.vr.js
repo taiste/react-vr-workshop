@@ -49,7 +49,7 @@ export default class reactVrWorkshop extends React.Component {
         var time = this.state.stationInfo.length > 0 ? this.convertUnixTimeToDate(this.state.stationInfo[i].expecteddeparturetime) : "";
         var destination = this.state.stationInfo.length > 0 ? this.state.stationInfo[i].destinationdisplay : "";
         var line = this.state.stationInfo.length > 0 ? this.state.stationInfo[i].lineref : "";
-        return time+" "+destination+" "+line;
+        return time+" "+line+" "+destination;
     }
 
     createResults() {
@@ -63,9 +63,9 @@ export default class reactVrWorkshop extends React.Component {
             resultViews.push(<Text
                 style={{
                     transform: [{translate: [1.3, 0.3, 0]}, {rotateY: -30}],
-                    backgroundColor: '#242424af',
+                    backgroundColor: '#FBDC4Fef',
                     marginTop: 0.02,
-                    width: 1,
+                    width: 1.4,
                 }}>
                 {this.assembleResultText(i)}
                 </Text>);
@@ -89,7 +89,7 @@ export default class reactVrWorkshop extends React.Component {
                         <Text
                             style= {{
                                 textAlign: 'center',
-                                backgroundColor: "#904824af",
+                                backgroundColor: "#FD8E6Ddf",
                             }}>
                             Pysäkki 1
                         </Text>
@@ -102,7 +102,7 @@ export default class reactVrWorkshop extends React.Component {
                         <Text
                             style= {{
                                 textAlign: 'center',
-                                backgroundColor: "#701024af",
+                                backgroundColor: "#DE86FAdf",
                             }}>
                             Pysäkki 69
                         </Text>
@@ -115,7 +115,7 @@ export default class reactVrWorkshop extends React.Component {
                         <Text
                             style= {{
                                 textAlign: 'center',
-                                backgroundColor: "#9040efaf",
+                                backgroundColor: "#C8F2DAdf",
                             }}>
                             Pysäkki 162
                         </Text>

@@ -20,6 +20,16 @@ Selaimella:
 
 Taika löytyy index.vr.js-tiedstosta.
 
+## Workshopin kulku
+
+Jaetaan workshop kolmeen osaan.
+
+1. Katsotaan tarvittavien pakettien asennus
+2. Käydään läpi miten luodaan perus viewi, image ja text -elementtejä
+3. Google Cardboard vaatii https-yhteyden. Luodaan lokaali certit ja proxytetaan lokaali https-yhteys.
+
+Pidetään osien välissä pienet 10min tauot ja katsellaan vähän miten on mennyt.
+
 ## Usage
 
 Paina nappia ja voilá: Pysäkin aikataulut.
