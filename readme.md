@@ -1,12 +1,12 @@
-# Project Name
-
-FöliVR
+# react-vr-workshop
 
 ## Installation
 
 Mitä tarvitaan?
 Päällimmäisenä dependencyjen listalla roikkuu node:
+
 https://nodejs.org/en/download/
+
 https://docs.npmjs.com/getting-started/installing-node
 
 Asennetaan reactVR:
@@ -36,19 +36,26 @@ VR-näkymän aktivointi esimerkiksi Google Cardboardin kanssa vaatii keskusteluy
 ## Mitä tehdä kun kaikki valmista?
 
 1.Tee koodiin parannuksia ja tyylittelyviilauksia! `https://help.github.com/articles/creating-a-pull-request/`
+
 2. Napeista omat komponenttinsa
+
 3. Dynaamisesti luodut suosikkinapit
+
 4. Kuvaa oma 360° panoraamakuva
+
 5. 3D-visuaalisaatioita
+
 `data.foli.fi` on auki latailuille ja ihmettelyille.
 
 ## Contributing
 
-1. git@github.com:dreeri/foli-vr.git Voi vielä ehkä muuttua
+1. git@github.com:taiste/react-vr-workshop.git Voi vielä ehkä muuttua
 2. Create your feature branch: `git checkout -b my-new-feature`
 3. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
+
+`https://help.github.com/articles/creating-a-pull-request/`
 
 ## Credits
 
