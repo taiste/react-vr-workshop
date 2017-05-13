@@ -9,7 +9,42 @@ import {
     VrButton,
 } from 'react-vr';
 
-import LabeledButton from './src/components/LabeledButton'
+import LabeledButton from './src/components/LabeledButton';
+
+
+const busStops = [
+    {
+        color: "#FF9800DF",
+        stopId: 1
+    }, {
+        color: "#FF80ABDF",
+        stopId: 69
+    }, {
+        color: "#00BCD4DF",
+        stopId: 162
+    }, {
+        color: "#FF7043DF",
+        stopId: 8
+    }, {
+        color: "#FFEB3BDF",
+        stopId: 22
+    }, {
+        color: "#AB47BCDF",
+        stopId: 33
+    }, {
+        color: "#26C6DADF",
+        stopId: 40
+    }, {
+        color: "#B2FF59DF",
+        stopId: 6
+    }
+]
+
+const initialViewPosition = {
+    transform: [{ translate: [0, 0, -1] }],
+    width: 1,
+    layoutOrigin: [0.5, 0.5]
+}
 
 export default class reactVrWorkshop extends React.Component {
     constructor(props) {
