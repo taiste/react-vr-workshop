@@ -20,21 +20,10 @@ export default class reactVrWorkshop extends React.Component {
             numberOfResults: 5,
         }
 
-        this.convertUnixTimeToDate = this.convertUnixTimeToDate.bind(this);
-        this.fetchData = this.fetchData.bind(this);
-        this.createResults = this.createResults.bind(this);
-        this.assembleResultText = this.assembleResultText.bind(this);
+        //Binding is not needed when using arrow functions whithin the class
     }
 
-    convertUnixTimeToDate(unixTime) {
-        var a = new Date(unixTime * 1000);
-        var hour = (a.getHours() < 10 ? '0' : '') + a.getHours();
-        var min = (a.getMinutes() < 10 ? '0' : '') + a.getMinutes();
-        var time = hour + ':' + min;
-        return time;
-    }
-
-    fetchData(stopNumber) {
+    fetchData = stopNumber => {
         fetch(this.state.foliApi + stopNumber)
             .then((res) => {
                 return res.json();
@@ -47,63 +36,64 @@ export default class reactVrWorkshop extends React.Component {
             })
     }
 
-    assembleResultText(i) {
-        var time = this.state.stationInfo.length > 0 ? this.convertUnixTimeToDate(this.state.stationInfo[i].expecteddeparturetime) : "";
-        var destination = this.state.stationInfo.length > 0 ? this.state.stationInfo[i].destinationdisplay : "";
-        var line = this.state.stationInfo.length > 0 ? this.state.stationInfo[i].lineref : "";
+    createTimetableList = () => {
+        return this.state.stationInfo
+            .slice(0, this.state.numberOfResults)
+            .map(station => {
+                return (
+                    <Text
+                        style={{
+                            transform: [{ translate: [1.3, 0.3, -0.1] }, { rotateY: -30 }],
+                            backgroundColor: '#FBDC4Fef',
+                            marginTop: 0.02,
+                            width: 1.4,
+                        }}>
+                        {this.assembleTimetableItemText(station)}
+                    </Text>
+                )
+            })
+    }
+
+    assembleTimetableItemText = (station) => {
+        //TODO: add station validation
+        var time = this.convertUnixTimeToDate(station.expecteddeparturetime);
+        var destination = station.destinationdisplay;
+        var line = station.lineref;
         return time + " " + line + " " + destination;
     }
 
-    createResults() {
-        const resultViews = [];
-        for (var i = 0; i < this.state.stationInfo.length; i++) {
-            if (i > this.state.numberOfResults - 1) {
-                break;
-            }
-            resultViews.push(<Text
-                style={{
-                    transform: [{ translate: [1.3, 0.3, 0] }, { rotateY: -30 }],
-                    backgroundColor: '#FBDC4Fef',
-                    marginTop: 0.02,
-                    width: 1.4,
-                }}>
-                {this.assembleResultText(i)}
-            </Text>);
-
-        }
-        return resultViews
+    convertUnixTimeToDate = unixTime => {
+        var a = new Date(unixTime * 1000);
+        var hour = (a.getHours() < 10 ? '0' : '') + a.getHours();
+        var min = (a.getMinutes() < 10 ? '0' : '') + a.getMinutes();
+        var time = hour + ':' + min;
+        return time;
     }
 
     render() {
         return (
             <View>
                 <Pano source={asset('background.jpg')} />
-                <View style={{
-                    transform: [{ translate: [0, 0, -1] }],
-                    width: 1,
-                    layoutOrigin: [0.5, 0.5],
-                }}>
 
-                    <LabeledButton
-                        label="Pysäkki 1"
-                        color="#FD8E6Ddf"
-                        onButtonClicked={() => this.fetchData(1)} />
-
-                    <LabeledButton
-                        label="Pysäkki 69"
-                        color="#DE86FAdf"
-                        onButtonClicked={() => this.fetchData(69)} />
-
-                    <LabeledButton
-                        label="Pysäkki 162"
-                        color="#C8F2DAdf"
-                        onButtonClicked={() => this.fetchData(162)} />
-
-                    {this.createResults()}
+                <View style={initialViewPosition}>
+                    {
+                        busStops.map((stop, index) => (
+                            <LabeledButton
+                                positionMultiplier={index - (busStops.length - 1) / 2}
+                                key={stop.stopId}
+                                label={"Pysäkki " + stop.stopId}
+                                color={stop.color}
+                                onPressed={() => this.fetchData(stop.stopId)} />
+                        ))
+                    }
+                    {this.createTimetableList()}
                 </View>
             </View>
         );
     }
 };
+
+
+
 
 AppRegistry.registerComponent('reactVrWorkshop', () => reactVrWorkshop);
