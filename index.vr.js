@@ -1,13 +1,50 @@
 import React from 'react';
 import {
-  AppRegistry,
-  asset,
-  StyleSheet,
-  Pano,
-  Text,
-  View,
-  VrButton,
+    AppRegistry,
+    asset,
+    StyleSheet,
+    Pano,
+    Text,
+    View,
+    VrButton,
 } from 'react-vr';
+
+import LabeledButton from './src/components/LabeledButton';
+
+
+const busStops = [
+    {
+        color: "#FF9800DF",
+        stopId: 1
+    }, {
+        color: "#FF80ABDF",
+        stopId: 69
+    }, {
+        color: "#00BCD4DF",
+        stopId: 162
+    }, {
+        color: "#FF7043DF",
+        stopId: 8
+    }, {
+        color: "#FFEB3BDF",
+        stopId: 22
+    }, {
+        color: "#AB47BCDF",
+        stopId: 33
+    }, {
+        color: "#26C6DADF",
+        stopId: 40
+    }, {
+        color: "#B2FF59DF",
+        stopId: 6
+    }
+]
+
+const initialViewPosition = {
+    transform: [{ translate: [0, 0, -1] }],
+    width: 1,
+    layoutOrigin: [0.5, 0.5]
+}
 
 export default class reactVrWorkshop extends React.Component {
     constructor(props) {
@@ -18,13 +55,49 @@ export default class reactVrWorkshop extends React.Component {
             numberOfResults: 5,
         }
 
-        this.convertUnixTimeToDate = this.convertUnixTimeToDate.bind(this);
-        this.fetchData = this.fetchData.bind(this);
-        this.createResults = this.createResults.bind(this);
-        this.assembleResultText = this.assembleResultText.bind(this);
+        //Binding is not needed when using arrow functions whithin the class
     }
 
-    convertUnixTimeToDate(unixTime) {
+    fetchData = stopNumber => {
+        fetch(this.state.foliApi + stopNumber)
+            .then((res) => {
+                return res.json();
+            })
+            .then((res) => {
+                this.setState((prevState) => ({ stationInfo: (res.result) }));
+            }).catch((error) => {
+                console.log("Api call error");
+                console.log(error.message);
+            })
+    }
+
+    createTimetableList = () => {
+        return this.state.stationInfo
+            .slice(0, this.state.numberOfResults)
+            .map(station => {
+                return (
+                    <Text
+                        style={{
+                            transform: [{ translate: [1.3, 0.3, -0.1] }, { rotateY: -30 }],
+                            backgroundColor: '#FBDC4Fef',
+                            marginTop: 0.02,
+                            width: 1.4,
+                        }}>
+                        {this.assembleTimetableItemText(station)}
+                    </Text>
+                )
+            })
+    }
+
+    assembleTimetableItemText = (station) => {
+        //TODO: add station validation
+        var time = this.convertUnixTimeToDate(station.expecteddeparturetime);
+        var destination = station.destinationdisplay;
+        var line = station.lineref;
+        return time + " " + line + " " + destination;
+    }
+
+    convertUnixTimeToDate = unixTime => {
         var a = new Date(unixTime * 1000);
         var hour = (a.getHours() < 10 ? '0' : '') + a.getHours();
         var min = (a.getMinutes() < 10 ? '0' : '') + a.getMinutes();
@@ -32,99 +105,30 @@ export default class reactVrWorkshop extends React.Component {
         return time;
     }
 
-    fetchData(stopNumber) {
-        fetch(this.state.foliApi+stopNumber)
-        .then((res) => {
-            return res.json();
-        })
-        .then((res) => {
-            this.setState((prevState) => ({ stationInfo: (res.result) }));
-        }).catch((error)=>{
-                console.log("Api call error");
-                console.log(error.message);
-        })
-    }
-
-    assembleResultText(i) {
-        var time = this.state.stationInfo.length > 0 ? this.convertUnixTimeToDate(this.state.stationInfo[i].expecteddeparturetime) : "";
-        var destination = this.state.stationInfo.length > 0 ? this.state.stationInfo[i].destinationdisplay : "";
-        var line = this.state.stationInfo.length > 0 ? this.state.stationInfo[i].lineref : "";
-        return time+" "+line+" "+destination;
-    }
-
-    createResults() {
-        const resultViews = [];
-        for(var i = 0; i < this.state.stationInfo.length; i++)
-        {
-            if(i > this.state.numberOfResults-1)
-            {
-                    break;
-            }
-            resultViews.push(<Text
-                style={{
-                    transform: [{translate: [1.3, 0.3, 0]}, {rotateY: -30}],
-                    backgroundColor: '#FBDC4Fef',
-                    marginTop: 0.02,
-                    width: 1.4,
-                }}>
-                {this.assembleResultText(i)}
-                </Text>);
-
-        }
-        return resultViews
-    }
-
     render() {
         return (
             <View>
-                <Pano source={asset('background.jpg')}/>
-                <View style={{
-                    transform: [{translate: [0, 0, -1]}],
-                    width: 1,
-                    layoutOrigin: [0.5, 0.5],
-                }}>
-                    <VrButton
+                <Pano source={asset('background.jpg')} />
 
-                        onClick={()=>this.fetchData(1)}>
-                        <Text
-                            style= {{
-                                textAlign: 'center',
-                                backgroundColor: "#FD8E6Ddf",
-                            }}>
-                            Pysäkki 1
-                        </Text>
-                    </VrButton>
-                    <VrButton
-                        style={{
-                            marginTop: 0.1
-                        }}
-                        onClick={()=>this.fetchData(69)}>
-                        <Text
-                            style= {{
-                                textAlign: 'center',
-                                backgroundColor: "#DE86FAdf",
-                            }}>
-                            Pysäkki 69
-                        </Text>
-                    </VrButton>
-                    <VrButton
-                        style={{
-                            marginTop: 0.1
-                        }}
-                        onClick={()=>this.fetchData(162)}>
-                        <Text
-                            style= {{
-                                textAlign: 'center',
-                                backgroundColor: "#C8F2DAdf",
-                            }}>
-                            Pysäkki 162
-                        </Text>
-                    </VrButton>
-                    {this.createResults()}
+                <View style={initialViewPosition}>
+                    {
+                        busStops.map((stop, index) => (
+                            <LabeledButton
+                                positionMultiplier={index - (busStops.length - 1) / 2}
+                                key={stop.stopId}
+                                label={"Pysäkki " + stop.stopId}
+                                color={stop.color}
+                                onPressed={() => this.fetchData(stop.stopId)} />
+                        ))
+                    }
+                    {this.createTimetableList()}
                 </View>
             </View>
         );
-        }
+    }
 };
+
+
+
 
 AppRegistry.registerComponent('reactVrWorkshop', () => reactVrWorkshop);
